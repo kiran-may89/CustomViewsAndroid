@@ -48,6 +48,8 @@ class FanSpeed @JvmOverloads constructor(context: Context,attr: AttributeSet? = 
         fanSpeedMaxColor = typedArray.getColor(R.styleable.DialView_fanColor3,0)
         typedArray.recycle()
     }
+
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         radius = (min(w,h)/2.0*0.8).toFloat()
 

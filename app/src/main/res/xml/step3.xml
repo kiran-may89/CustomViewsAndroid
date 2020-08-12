@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Transition
+        app:constraintSetEnd="@+id/end"
+        app:constraintSetStart="@+id/start"
+        app:duration="3000">
+        <OnClick
+            app:clickAction="toggle"
+            app:targetId="@+id/moon" />
+        <KeyFrameSet>
+            <KeyPosition app:framePosition="50"
+                app:motionTarget="@id/moon"
+                app:keyPositionType="parentRelative"
+                app:percentY="0.5"/>
+            <KeyPosition app:framePosition="25"
+                app:keyPositionType="parentRelative"
+                app:percentY="0.8"/>
+            <KeyPosition app:keyPositionType="parentRelative"
+            app:percentY="0.25"
+            app:framePosition="60"/>
+            <KeyAttribute app:framePosition="25"
+                app:motionTarget="@id/moon"
+                android:rotation="-360"
+                android:scaleX="2.0"
+                android:scaleY="2.0"/>
+            <KeyAttribute app:framePosition="60"
+                app:motionTarget="@id/moon"
+                android:rotation="0"
+                android:scaleX="1.0"
+                android:scaleY="1.0"/>
+        </KeyFrameSet>
+    </Transition>
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@id/moon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <Constraint android:id="@id/credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/moon"
+            app:layout_constraintTop_toTopOf="@id/moon"/>
+
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@id/moon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <Constraint android:id="@id/credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1.0"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/moon"
+            app:layout_constraintTop_toTopOf="@id/moon"/>
+    </ConstraintSet>
+
+
+</MotionScene>
