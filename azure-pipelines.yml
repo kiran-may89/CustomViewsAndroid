@@ -10,14 +10,16 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  - name: major
+  - name: majorversion
     value: 1
   - name: minor
     value: 0
   - name: offset
     value: 28
-  - name: Revision
-    value: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
+  - name: patch
+    value: $[counter(format('{0}.{1}', variables['majorversion'],variables['minor']),0)]
+  - name : updatedVersion
+    value: ([int] $(patch)) + ([int] $(offset))
 
 
 steps:
@@ -27,12 +29,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [int] $buildIdWithOffset = ([int] $(Revision)) + ([int] $(offset))
+      [int] $buildIdWithOffset = ([int] $(patch)) + ([int] $(offset))
       [string] $buildName = "$(major).$(minor).$buildIdWithOffset"
       Write-Host "Setting the name of the build to '$buildName'."
       Write-Host "##vso[build.updatebuildnumber]$buildName"
 
 - script: |
-    echo $(buildIdWithOffset)
+    echo $(updatedVersion)
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
