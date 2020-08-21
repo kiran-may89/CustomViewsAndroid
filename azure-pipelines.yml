@@ -29,6 +29,6 @@ steps:
 #       Write-Host "##vso[build.updatebuildnumber]$buildName"
 
 - script: |
-    echo $(buildVersion)
+    echo $(y)
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
