@@ -10,7 +10,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
- 
+  major : 1
+  minor : 0
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
   versionNumber : '$(major).$(minor).$(patchversion)'
 name: $(versionNumber)
