@@ -10,28 +10,26 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  VersionNumber: '1.0'  
-  BuildNumber: $(Build.BuildNumber) 
+  major : 1
+  minor : 0
+  offset : 28
+  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),28)]
+  versionNumber : '$(major).$(minor).$(Revision)'
 
-name: $(VersionNumber).$(rev:r)
 
 steps:
-- powershell: 'Move-Item -Path "Directory.Build.props.tokens" -Destination "Directory.Build.props" -Force'
-  displayName: "Replace Directory.Build.props with tokenized version"
 
-- task: replacetokens@3
+- task: PowerShell@2
+  displayName: Set the name of the build (i.e. the Build.BuildNumber)
   inputs:
-   rootDirectory: "$(Build.SourcesDirectory)"
-   targetFiles: "**/Directory.Build.props"
-   encoding: "auto"
-   writeBOM: true
-   actionOnMissing: "fail"
-   keepToken: true
-   tokenPrefix: "__"
-   tokenSuffix: "__"
+    targetType: 'inline'
+    script: |
+      [int] $buildIdWithOffset = ([int] $(Revision)) + ([int] $(offset))
+      [string] $buildName = "$(major).$(minor).$buildIdWithOffset"
+      Write-Host "Setting the name of the build to '$buildName'."
+      Write-Host "##vso[build.updatebuildnumber]$buildName"
 
 - script: |
-   echo $(BuildNumber)
-          
-
-
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
