@@ -30,6 +30,8 @@ steps:
    tokenPrefix: "__"
    tokenSuffix: "__"
 
-
+- script: |
+   echo $(BuildNumber)
+          
 
 
