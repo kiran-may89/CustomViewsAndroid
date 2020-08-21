@@ -32,17 +32,4 @@ steps:
 
 
 
-- task: PowerShell@2
-  displayName: Set the name of the build (i.e. the Build.BuildNumber)
-  inputs:
-    targetType: 'inline'
-    script: |
-      [int] $buildIdWithOffset = ([int] $(updatedVersion)) + ([int] $(offset))
-      [string] $buildName = "$(majorversion).$(minor).$buildIdWithOffset"
-      Write-Host "Setting the name of the build to '$buildName'."
-      Write-Host "##vso[build.updatebuildnumber]$buildName"
 
-- script: |
-    echo $(updatedVersion)
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
