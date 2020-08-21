@@ -19,7 +19,7 @@ variables:
   - name: patch
     value: $[counter(format('{0}.{1}', variables['majorversion'],variables['minor']),0)]
   - name : updatedVersion
-    value: $[ $(patch) +  $(offset)]
+    value: $(variables['patch'] +  variables['offset'])
 
 
 steps:
