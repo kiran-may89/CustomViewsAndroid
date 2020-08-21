@@ -12,9 +12,9 @@ pool:
 variables:
  
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),variables['patchversion'])]
- 
+  versionNumber : '$(major).$(minor).$(patchversion)'
 steps:
-- script: echo $(Revision)!
+- script: echo $(versionNumber)!
   displayName: 'Run a one-line script'
 
 - script: |
