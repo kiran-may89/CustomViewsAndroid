@@ -19,7 +19,7 @@ variables:
   - name: patch
     value: $[counter(format('{0}.{1}', variables['majorversion'],variables['minor']),0)]
   - name : updatedVersion
-    value: 0
+    value: $[ $(patch) +  $(offset)]
 
 
 steps:
@@ -29,8 +29,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [int] updatedVersion = ([int] $(patch)) + ([int] $(offset))
-      [string] $buildName = "$(majorversion).$(minor).$updatedVersion"
+      [int] $buildIdWithOffset = ([int] $(patch)) + ([int] $(offset))
+      [string] $buildName = "$(majorversion).$(minor).$buildIdWithOffset"
       Write-Host "Setting the name of the build to '$buildName'."
       Write-Host "##vso[build.updatebuildnumber]$buildName"
 
