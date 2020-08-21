@@ -12,12 +12,21 @@ pool:
 variables:
   major : 1
   minor : 0
-  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),28)]
+  offset : 28
+  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
   versionNumber : '$(major).$(minor).$(Revision)'
-name: $(major).$(minor).$(Revision)
+
+
 steps:
-- script: echo $(versionNumber)!
-  displayName: 'Run a one-line script'
+- task: PowerShell@2
+  displayName: Set the name of the build (i.e. the Build.BuildNumber)
+  inputs:
+    targetType: 'inline'
+    script: |
+      [int] $buildIdWithOffset = ([int] $(versionNumber)) + ([int] $(offset))
+      [string] $buildName = "$(major).$(minor).$buildIdWithOffset"
+      Write-Host "Setting the name of the build to '$buildName'."
+      Write-Host "##vso[build.updatebuildnumber]$buildName"
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
