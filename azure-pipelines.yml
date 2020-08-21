@@ -14,11 +14,17 @@ variables:
   minor : 0
   offset : 28
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),128)]
+  tested: 1
+  # define minor as a counter with the prefix as variable major, and seed as 100.
+  minors: $[counter(variables['tested'], 100)]
+
+
+
   versionNumber : '$(major).$(minor).$(Revision)'
 
 
 steps:
-
+- bash: echo $(minors)
 - task: PowerShell@2
   displayName: Set the name of the build (i.e. the Build.BuildNumber)
   inputs:
