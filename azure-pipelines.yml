@@ -2,16 +2,19 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
+name: 
 
 trigger:
 - master
 
 pool:
   vmImage: 'ubuntu-latest'
-
+variables:
+  version.MajorMinor: '1.2' # Manually adjust the version number as needed for semantic versioning. Revision is auto-incremented.
+  version.Revision: $[counter(variables['version.MajorMinor'], 0)]
+  versionNumber: '$(version.MajorMinor).$(version.Revision)'
 steps:
-- script: echo Hello, world!
+- script: echo version.Revision!
   displayName: 'Run a one-line script'
 
 - script: |
