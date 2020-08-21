@@ -12,7 +12,7 @@ pool:
 variables:
   major : 1
   minor : 0
-  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
+  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),28)]
   versionNumber : '$(major).$(minor).$(Revision)'
 name: $(major).$(minor).$(Revision)
 steps:
