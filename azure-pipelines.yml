@@ -10,11 +10,11 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  MajorMinor: '1.0' # Manually adjust the version number as needed for semantic versioning. Revision is auto-incremented.
-  Revision: $[counter(variables['MajorMinor'], 0)]
-  versionNumber: '$(MajorMinor).$(Revision)'
+ 
+  Revision: $counter(format('{0}.{1}', variables['major'],variables['minor']),variables['patchversion']
+ 
 steps:
-- script: echo $(versionNumber)!
+- script: echo $(Revision)!
   displayName: 'Run a one-line script'
 
 - script: |
