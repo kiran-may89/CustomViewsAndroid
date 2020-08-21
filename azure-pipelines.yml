@@ -2,7 +2,7 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-name: 
+
 
 trigger:
 - master
@@ -13,6 +13,7 @@ variables:
  
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),variables['patchversion'])]
   versionNumber : '$(major).$(minor).$(patchversion)'
+name: $(versionNumber)
 steps:
 - script: echo $(versionNumber)!
   displayName: 'Run a one-line script'
