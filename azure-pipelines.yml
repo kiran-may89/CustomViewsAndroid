@@ -16,7 +16,7 @@ variables:
   versionNumber : '$(major).$(minor).$(Revision)'
 name: $(versionNumber)
 steps:
-- script: echo $(versionNumber)!
+- script: echo $(Revision)!
   displayName: 'Run a one-line script'
 
 - script: |
