@@ -11,12 +11,12 @@ pool:
   vmImage: 'ubuntu-latest'
 variables:
   major : 1
-  minor : 0
-  offset : 28
+  minor : 2
+  offset : 0
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),128)]
   tested: 1
   # define minor as a counter with the prefix as variable major, and seed as 100.
-  minors: $[counter(variables['tested'], 100)]
+
 
 
 
