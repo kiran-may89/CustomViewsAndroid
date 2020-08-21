@@ -19,7 +19,16 @@ steps:
 - powershell: 'Move-Item -Path "Directory.Build.props.tokens" -Destination "Directory.Build.props" -Force'
   displayName: "Replace Directory.Build.props with tokenized version"
 
-
+- task: replacetokens@3
+  inputs:
+   rootDirectory: "$(Build.SourcesDirectory)"
+   targetFiles: "**/Directory.Build.props"
+   encoding: "auto"
+   writeBOM: true
+   actionOnMissing: "fail"
+   keepToken: true
+   tokenPrefix: "__"
+   tokenSuffix: "__"
 
 
 
