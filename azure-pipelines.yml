@@ -10,19 +10,18 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  - name: majorversion
-    value: 1
-  - name: minor
-    value: 0
-  - name: offset
-    value: 28
-  - name: patch
-    value: $[counter(format('{0}.{1}', variables['majorversion'],variables['minor']),0)]
-  - name : updatedVersion
-    value: $(variables['patch'] +  variables['offset'])
+  VersionNumber: '1.0'  
+  BuildNumber: $(Build.BuildNumber) 
 
+name: $(VersionNumber).$(rev:r)
 
 steps:
+- powershell: 'Move-Item -Path "Directory.Build.props.tokens" -Destination "Directory.Build.props" -Force'
+  displayName: "Replace Directory.Build.props with tokenized version"
+
+
+
+
 
 - task: PowerShell@2
   displayName: Set the name of the build (i.e. the Build.BuildNumber)
