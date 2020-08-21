@@ -10,30 +10,19 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  major : 1
-  minor : 2
-  offset : 0
-  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),128)]
+  major : 2
+  minor : 0
+  offset : 28
+  Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
   tested: 1
-  # define minor as a counter with the prefix as variable major, and seed as 100.
 
+  buildVersion: $[counter(variables['tested'], 100)]
 
-
-
-  versionNumber : '$(major).$(minor).$(Revision)'
+name:'$(major).$(minor).$(buildVersion)'
 
 
 steps:
-- bash: echo $(minors)
-- task: PowerShell@2
-  displayName: Set the name of the build (i.e. the Build.BuildNumber)
-  inputs:
-    targetType: 'inline'
-    script: |
-      [int] $buildIdWithOffset = ([int] $(Revision)) + ([int] $(offset))
-      [string] $buildName = "$(major).$(minor).$buildIdWithOffset"
-      Write-Host "Setting the name of the build to '$buildName'."
-      Write-Host "##vso[build.updatebuildnumber]$buildName"
+  
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
