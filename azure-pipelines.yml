@@ -10,21 +10,28 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  major : 2
+  major : 1
   minor : 0
   offset : 28
+  build : 0
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
-  tested: 1
+  versionNumber : '$(major).$(minor).$(Revision)'
+  buildVersion : $[counter(variables['build'], 28)]
 
-  buildVersion: $[counter(variables['tested'], 100)]
-
-name:'$(major).$(minor).$(buildVersion)'
-
-
+name: '$(major).$(minor).$(buildVersion)'
 steps:
-  
+
+- task: PowerShell@2
+  displayName: Set the name of the build (i.e. the Build.BuildNumber)
+  inputs:
+    targetType: 'inline'
+    script: |
+      [int] $buildIdWithOffset = ([int] $(Revision)) + ([int] $(offset))
+      [string] $buildName = "$(major).$(minor).$buildIdWithOffset"
+      Write-Host "Setting the name of the build to '$buildName'."
+      Write-Host "##vso[build.updatebuildnumber]$buildName"
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
+    echo $(buildVersion)
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
