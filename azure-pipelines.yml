@@ -1,0 +1,48 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+variables:
+  VersionNumber: '1.0'  
+  BuildNumber: $(Build.BuildNumber) 
+
+name: $(VersionNumber).$(rev:r)
+
+steps:
+- powershell: 'Move-Item -Path "Directory.Build.props.tokens" -Destination "Directory.Build.props" -Force'
+  displayName: "Replace Directory.Build.props with tokenized version"
+
+- task: replacetokens@3
+  inputs:
+   rootDirectory: "$(Build.SourcesDirectory)"
+   targetFiles: "**/Directory.Build.props"
+   encoding: "auto"
+   writeBOM: true
+   actionOnMissing: "fail"
+   keepToken: true
+   tokenPrefix: "__"
+   tokenSuffix: "__"
+
+
+
+- task: PowerShell@2
+  displayName: Set the name of the build (i.e. the Build.BuildNumber)
+  inputs:
+    targetType: 'inline'
+    script: |
+      [int] $buildIdWithOffset = ([int] $(updatedVersion)) + ([int] $(offset))
+      [string] $buildName = "$(majorversion).$(minor).$buildIdWithOffset"
+      Write-Host "Setting the name of the build to '$buildName'."
+      Write-Host "##vso[build.updatebuildnumber]$buildName"
+
+- script: |
+    echo $(updatedVersion)
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
