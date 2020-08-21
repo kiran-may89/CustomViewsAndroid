@@ -10,7 +10,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  major : 1
+  major : $(WallBoard.major)
   minor : 1
   Revision: $[counter(format('{0}.{1}', variables['major'],variables['minor']),0)]
   versionNumber : '$(major).$(minor).$(Revision)'
