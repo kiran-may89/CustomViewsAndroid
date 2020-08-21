@@ -30,7 +30,7 @@ steps:
     targetType: 'inline'
     script: |
       [int] $buildIdWithOffset = ([int] $(patch)) + ([int] $(offset))
-      [string] $buildName = "$(major).$(minor).$buildIdWithOffset"
+      [string] $buildName = "$(majorversion).$(minor).$buildIdWithOffset"
       Write-Host "Setting the name of the build to '$buildName'."
       Write-Host "##vso[build.updatebuildnumber]$buildName"
 
