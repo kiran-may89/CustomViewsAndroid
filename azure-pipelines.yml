@@ -12,8 +12,8 @@ pool:
 variables:
   major : 1
   minor : 1
-  x : 0
-  y : $[counter(variables['x'], 98)]
+  x : 1
+  y : $[counter(variables['x'], 100)]
  
 name: '$(major).$(minor).$(y)'
 steps:
