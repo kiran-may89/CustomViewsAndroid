@@ -14,7 +14,7 @@ variables:
   version.Revision: $[counter(variables['version.MajorMinor'], 0)]
   versionNumber: '$(version.MajorMinor).$(version.Revision)'
 steps:
-- script: echo version.Revision!
+- script: echo $(versionNumber)!
   displayName: 'Run a one-line script'
 
 - script: |
