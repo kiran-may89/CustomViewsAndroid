@@ -15,7 +15,7 @@ variables:
   offset : 1
   Revision: $[counter(format('{0}.{1}.{0}', variables['major'],variables['minor'],variables['offset']),100)]
  
-name: '$(major).$(minor).$(Revision)'
+name: '$(major).$(minor).$(Rev:r)'
 steps:
 
 # - task: PowerShell@2
@@ -29,6 +29,6 @@ steps:
 #       Write-Host "##vso[build.updatebuildnumber]$buildName"
 
 - script: |
-    echo $(Revision)
+    echo $(Rev:r)
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
