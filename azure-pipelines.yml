@@ -9,13 +9,7 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-variables:
-  major : 1
-  minor : 0
-  offset : 1
-  Revision: $[counter(format('{0}.{1}.{0}', variables['major'],variables['minor'],variables['offset']),100)]
- 
-name: '$(major).$(minor).$(Revision)'
+
 steps:
 
 # - task: PowerShell@2
