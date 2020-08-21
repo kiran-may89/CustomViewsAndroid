@@ -12,10 +12,10 @@ pool:
 variables:
   major : 1
   minor : 0
-  x : 1
-  y : $[counter(variables['x'], 100)]
+  offset : 1
+  Revision: $[counter(format('{0}.{1}.{0}', variables['major'],variables['minor'],variables['offset']),27)]
  
-name: '$(major).$(minor).$(y)'
+name: '$(major).$(minor).$(Revision)'
 steps:
 
 # - task: PowerShell@2
